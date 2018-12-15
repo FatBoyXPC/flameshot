@@ -138,6 +138,9 @@ int main(int argc, char *argv[]) {
     CommandOption rawImageOption(
                 {"r", "raw"},
                 QStringLiteral("Print raw PNG capture"));
+    CommandOption selectionOption(
+                {"s", "selection"},
+                QStringLiteral("Print geometry of the selection in the format W H X Y. Does nothing if raw is specified"));
     CommandOption screenNumberOption(
                 {"n", "number"},
                 QStringLiteral("Define the screen to capture,\ndefault: screen containing the cursor"),
@@ -193,7 +196,7 @@ int main(int argc, char *argv[]) {
     parser.AddArgument(configArgument);
     auto helpOption = parser.addHelpOption();
     auto versionOption = parser.addVersionOption();
-    parser.AddOptions({ pathOption, delayOption, rawImageOption }, guiArgument);
+    parser.AddOptions({ pathOption, delayOption, rawImageOption, selectionOption }, guiArgument);
     parser.AddOptions({ screenNumberOption, clipboardOption,pathOption,
                         delayOption, rawImageOption },
                       screenArgument);
@@ -215,6 +218,7 @@ int main(int argc, char *argv[]) {
         QString pathValue = parser.value(pathOption);
         int delay = parser.value(delayOption).toInt();
         bool isRaw = parser.isSet(rawImageOption);
+        bool isSelection = parser.isSet(selectionOption);
         DBusUtils dbusUtils;
         CaptureRequest req(CaptureRequest::GRAPHICAL_MODE, delay, pathValue);
         uint id = req.id();
@@ -229,6 +233,16 @@ int main(int argc, char *argv[]) {
 
         if (isRaw) {
             dbusUtils.connectPrintCapture(sessionBus, id);
+            QTimer t;
+            t.setInterval(delay + 1000 * 60 * 15); // 15 minutes timeout
+            QObject::connect(&t, &QTimer::timeout, qApp,
+                             &QCoreApplication::quit);
+            t.start();
+            // wait
+            return app.exec();
+            app.exec();
+        } else if (isSelection) {
+            dbusUtils.connectSelectionCapture(sessionBus, id);
             QTimer t;
             t.setInterval(delay + 1000 * 60 * 15); // 15 minutes timeout
             QObject::connect(&t, &QTimer::timeout, qApp,

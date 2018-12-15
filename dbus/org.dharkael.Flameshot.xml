@@ -92,6 +92,10 @@
     <signal name="captureTaken">
       <arg name="id" type="i" direction="out"/>
       <arg name="rawImage" type="ay" direction="out"/>
+      <arg name="selectionWidth" type="i" direction="out"/>
+      <arg name="selectionHeight" type="i" direction="out"/>
+      <arg name="selectionX" type="i" direction="out"/>
+      <arg name="selectionY" type="i" direction="out"/>
     </signal>
 
     <!--
@@ -103,5 +107,6 @@
     <signal name="captureFailed">
       <arg name="id" type="i" direction="out"/>
     </signal>
+
   </interface>
 </node>
