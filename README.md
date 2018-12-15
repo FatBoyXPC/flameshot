@@ -25,8 +25,13 @@
     <a href="https://github.com/lupoDharkael/flameshot/blob/master/LICENSE">
       <img src="https://img.shields.io/github/license/lupoDharkael/flameshot.svg?style=flat-square" alt="License" />
     </a>
+    <a href="https://github.com/flameshotapp/flameshotapp.github.io">
+      <img src="https://img.shields.io/github/release/lupoDharkael/flameshot.svg?style=flat-square&label=docs" alt="Docs" />
+    </a>
   </p>
 </div>
+
+
 
 ## Preview
 
@@ -147,16 +152,17 @@ You can use the graphical menu to configure Flameshot, but alternatively you can
 
 These shortcuts are available in GUI mode:
 
-|  Keys                                                                     |  Description                         |
-|---                                                                        |---                                   |
-| <kbd>←</kbd>, <kbd>↓</kbd>, <kbd>↑</kbd>, <kbd>→</kbd>                    | Move selection 1px                   |
-| <kbd>Shift</kbd> + <kbd>←</kbd>, <kbd>↓</kbd>, <kbd>↑</kbd>, <kbd>→</kbd> | Resize selection 1px                 |
-| <kbd>Esc</kbd>                                                            | Quit capture                         |
-| <kbd>Ctrl</kbd> + <kbd>C</kbd>                                            | Copy to clipboard                    |
-| <kbd>Ctrl</kbd> + <kbd>S</kbd>                                            | Save selection as a file             |
-| <kbd>Ctrl</kbd> + <kbd>Z</kbd>                                            | Undo the last modification           |
-| Right Click                                                               | Show color picker                    |
-| Mouse Wheel                                                               | Change the tool's thickness          |
+|  Keys                                                                     |  Description                                                   |
+|---                                                                        |---                                                             |
+| <kbd>←</kbd>, <kbd>↓</kbd>, <kbd>↑</kbd>, <kbd>→</kbd>                    | Move selection 1px                                             |
+| <kbd>Shift</kbd> + <kbd>←</kbd>, <kbd>↓</kbd>, <kbd>↑</kbd>, <kbd>→</kbd> | Resize selection 1px                                           |
+| <kbd>Esc</kbd>                                                            | Quit capture                                                   |
+| <kbd>Ctrl</kbd> + <kbd>C</kbd>                                            | Copy to clipboard                                              |
+| <kbd>Ctrl</kbd> + <kbd>S</kbd>                                            | Save selection as a file                                       |
+| <kbd>Ctrl</kbd> + <kbd>Z</kbd>                                            | Undo the last modification                                     |
+| <kbd>Spacebar</kbd>                                                       | Toggle visibility of sidebar with options of the selected tool |
+| Right Click                                                               | Show color picker                                              |
+| Mouse Wheel                                                               | Change the tool's thickness                                    |
 
 <kbd>Shift</kbd> + drag a handler of the selection area: mirror redimension in the opposite handler.
 
@@ -220,9 +226,11 @@ There are packages available for a few distros:
   + Package for Debian 9 ("Stretch") also [available via stretch-backports](https://backports.debian.org/).
 - [Ubuntu 18.04+](https://launchpad.net/ubuntu/+source/flameshot): `apt install flameshot`
 - [openSUSE](https://software.opensuse.org/package/flameshot)
-- [Void Linux](https://github.com/voidlinux/void-packages/tree/master/srcpkgs/flameshot) (`xbps-install flameshot`)
+- [Void Linux](https://github.com/void-linux/void-packages/tree/master/srcpkgs/flameshot) (`xbps-install flameshot`)
 - [Docker](https://github.com/ManuelLR/docker-flameshot)
 - Fedora: `dnf install flameshot`
+- [Snap/Flatpak/AppImage](https://github.com/flameshotapp/packages)
+- Besides, generic packages available via [opensuse software  repertory](https://software.opensuse.org//download.html?project=home%3AVitzy&package=flameshot)
 
 ## Compilation
 

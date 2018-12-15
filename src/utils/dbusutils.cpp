@@ -30,7 +30,21 @@ void DBusUtils::connectPrintCapture(QDBusConnection &session, uint id) {
     session.connect(QStringLiteral("org.dharkael.Flameshot"),
                        QStringLiteral("/"), QLatin1String(""), QStringLiteral("captureTaken"),
                        this,
-                       SLOT(captureTaken(uint, QByteArray)));
+                       SLOT(captureTaken(uint, QByteArray, uint, uint, uint, uint)));
+    // captureFailed
+    session.connect(QStringLiteral("org.dharkael.Flameshot"),
+                       QStringLiteral("/"), QLatin1String(""), QStringLiteral("captureFailed"),
+                       this,
+                       SLOT(captureFailed(uint)));
+}
+
+void DBusUtils::connectSelectionCapture(QDBusConnection &session, uint id) {
+    m_id = id;
+    // captureTaken
+    session.connect(QStringLiteral("org.dharkael.Flameshot"),
+                       QStringLiteral("/"), QLatin1String(""), QStringLiteral("captureTaken"),
+                       this,
+                       SLOT(selectionTaken(uint, QByteArray, uint, uint, uint, uint)));
     // captureFailed
     session.connect(QStringLiteral("org.dharkael.Flameshot"),
                        QStringLiteral("/"), QLatin1String(""), QStringLiteral("captureFailed"),
@@ -41,15 +55,28 @@ void DBusUtils::connectPrintCapture(QDBusConnection &session, uint id) {
 void DBusUtils::checkDBusConnection(const QDBusConnection &connection) {
     if (!connection.isConnected()) {
         SystemNotification().sendMessage(tr("Unable to connect via DBus"));
+        qApp->exit(1);
+    }
+}
+
+void DBusUtils::captureTaken(uint id, QByteArray rawImage, uint selectionWidth, uint selectionHeight, uint selectionX, uint selectionY) {
+    if (m_id == id) {
+        QFile file;
+        file.open(stdout, QIODevice::WriteOnly);
+
+        file.write(rawImage);
+        file.close();
         qApp->exit();
     }
 }
 
-void DBusUtils::captureTaken(uint id, QByteArray rawImage) {
+void DBusUtils::selectionTaken(uint id, QByteArray rawImage, uint selectionWidth, uint selectionHeight, uint selectionX, uint selectionY) {
     if (m_id == id) {
         QFile file;
         file.open(stdout, QIODevice::WriteOnly);
-        file.write(rawImage);
+
+        QTextStream out(&file);
+        out << selectionWidth << " " << selectionHeight << " " << selectionX << " " << selectionY;
         file.close();
         qApp->exit();
     }
@@ -58,6 +85,6 @@ void DBusUtils::captureTaken(uint id, QByteArray rawImage) {
 void DBusUtils::captureFailed(uint id) {
     if (m_id == id) {
         QTextStream(stdout) << "screenshot aborted\n";
-        qApp->exit();
+        qApp->exit(1);
     }
 }

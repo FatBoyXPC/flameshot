@@ -21,6 +21,7 @@
 // Based on KDE's KSnapshot regiongrabber.cpp, revision 796531, Copyright 2007 Luca Gugelmann <lucag@student.ethz.ch>
 // released under the GNU LGPL  <http://www.gnu.org/licenses/old-licenses/library.txt>
 
+#include <fstream>
 #include "capturewidget.h"
 #include "src/widgets/capture/hovereventfilter.h"
 #include "src/widgets/panel/sidepanelwidget.h"
@@ -142,7 +143,7 @@ CaptureWidget::CaptureWidget(const uint id, const QString &savePath,
 
 CaptureWidget::~CaptureWidget() {
     if (m_captureDone) {
-        emit captureTaken(m_id, this->pixmap());
+        emit captureTaken(m_id, this->pixmap(), m_context.selection);
     } else {
         emit captureFailed(m_id);
     }

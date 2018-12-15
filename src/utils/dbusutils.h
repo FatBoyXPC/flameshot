@@ -27,10 +27,12 @@ public:
     explicit DBusUtils(QObject *parent = nullptr);
 
     void connectPrintCapture(QDBusConnection &session, uint id);
+    void connectSelectionCapture(QDBusConnection &session, uint id);
     void checkDBusConnection(const QDBusConnection &connection);
 
 public slots:
-    void captureTaken(uint id, QByteArray rawImage);
+    void selectionTaken(uint id, QByteArray rawImage, uint selectionWidth, uint selectionHeight, uint selectionX, uint selectionY);
+    void captureTaken(uint id, QByteArray rawImage, uint selectionWidth, uint selectionHeight, uint selectionX, uint selectionY);
     void captureFailed(uint id);
 
 private:
