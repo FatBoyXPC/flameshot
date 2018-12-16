@@ -34,6 +34,7 @@
 #include "src/utils/screenshotsaver.h"
 #include "src/core/controller.h"
 #include "src/widgets/capture/modificationcommand.h"
+#include "src/tools/imgur/imguruploader.h"
 #include <QUndoView>
 #include <QScreen>
 #include <QGuiApplication>
@@ -753,8 +754,8 @@ void CaptureWidget::initShortcuts() {
     new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Down), this, SLOT(downResize()));
     new QShortcut(Qt::Key_Space, this, SLOT(togglePanel()));
     new QShortcut(Qt::Key_Escape, this, SLOT(deleteToolwidgetOrClose()));
-    new QShortcut(Qt::Key_Return, this, SLOT(copyScreenshot()));
-    new QShortcut(Qt::Key_Enter, this, SLOT(copyScreenshot()));
+    new QShortcut(Qt::Key_Return, this, SLOT(uploadToImgur()));
+    new QShortcut(Qt::Key_Enter, this, SLOT(uploadToImgur()));
 }
 
 void CaptureWidget::updateSizeIndicator() {
@@ -850,6 +851,13 @@ void CaptureWidget::saveScreenshot() {
     } else {
         ScreenshotSaver().saveToFilesystem(pixmap(), m_context.savePath);
     }
+    close();
+}
+
+void CaptureWidget::uploadToImgur() {
+    m_captureDone = true;
+    hide();
+    (new ImgurUploader(pixmap()))->show();
     close();
 }
 

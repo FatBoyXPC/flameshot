@@ -74,6 +74,7 @@ private slots:
     // TODO replace with tools
     void copyScreenshot();
     void saveScreenshot();
+    void uploadToImgur();
     void undo();
     void redo();
     void togglePanel();
